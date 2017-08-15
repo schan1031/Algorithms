@@ -32,8 +32,8 @@ class RingBuffer
     if @length == 0
       raise 'index out of bounds'
     end
-    out = @store[@count]
     @count -= 1
+    out = @store[@count]
     @length = @count - @start_idx
     return out
   end
@@ -62,6 +62,9 @@ class RingBuffer
 
   # O(1) ammortized
   def unshift(val)
+    if @length == @capacity
+      self.resize!
+    end
     @start_idx -= 1
     @store[@start_idx % @capacity] = val
     @length = @count - @start_idx
@@ -75,5 +78,13 @@ class RingBuffer
   end
 
   def resize!
+    @capacity *= 2
+    out = Array.new(@capacity)
+    (0...length).each do |idx|
+      out[idx] = @store[(start_idx % (@capacity / 2) + idx) % (@capacity / 2)]
+    end
+    @store = out
+    @start_idx = 0
+    @count = 8
   end
 end
