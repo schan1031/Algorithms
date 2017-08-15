@@ -27,7 +27,15 @@ class RingBuffer
     @store[@start_idx % @capacity + index] = val
   end
 
-  # O(1)
+  def last
+    self[@length-1]
+  end
+
+  def first
+    self[0]
+  end
+
+  # O(1)  
   def pop
     if @length == 0
       raise 'index out of bounds'
@@ -69,6 +77,7 @@ class RingBuffer
     @store[@start_idx % @capacity] = val
     @length = @count - @start_idx
   end
+
 
   protected
   attr_accessor :capacity, :start_idx, :store
