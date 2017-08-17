@@ -14,7 +14,7 @@ class BinaryMinHeap
   def extract
     @store[0], @store[count - 1] = @store[count - 1], @store[0]
     val = @store.pop
-    BinaryMinHeap.heapify_down(@store, 0, count)
+    BinaryMinHeap.heapify_down(@store, 0)
     return val
   end
 
@@ -23,9 +23,16 @@ class BinaryMinHeap
     @store[0]
   end
 
-  def push(val)
+  def push(val, &prc)
+
+    if !prc
+      prc = Proc.new do |el1, el2|
+        el1 <=> el2
+      end
+    end
+
     @store.push(val)
-    BinaryMinHeap.heapify_up(@store, count - 1, count)
+    BinaryMinHeap.heapify_up(@store, count - 1,)
   end
 
   public
@@ -79,7 +86,7 @@ class BinaryMinHeap
 
   def self.heapify_up(array, child_idx, len = array.length, &prc)
 
-    return if len == 1
+    return if len == 1 || len == 0
 
     if !prc
       prc = Proc.new do |el1, el2|

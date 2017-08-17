@@ -9,7 +9,6 @@ class Array
       heap.push(el)
     end
 
-    sep_ind = 0
     out = []
     until heap.count == 0
       out << heap.extract
