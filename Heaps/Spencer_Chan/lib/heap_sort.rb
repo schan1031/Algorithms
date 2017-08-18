@@ -14,9 +14,10 @@ class Array
       out << heap.extract
     end
 
-    out.each_index do |idx|
-      self[idx] = out[idx]
-    end
+    self.replace(out)
+    # out.each_index do |idx|
+    #   self[idx] = out[idx]
+    # end
 
   end
 end
