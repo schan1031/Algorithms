@@ -120,6 +120,14 @@ class BinarySearchTree
     arr
   end
 
+  def self.reverse_order_two(tree_node = @root, arr = [])
+    return if tree_node.nil?
+    reverse_order_two(tree_node.right, arr)
+    arr << tree_node
+    reverse_order_two(tree_node.left, arr)
+    arr
+  end
+
 
   private
   # optional helper methods go here:
