@@ -4,6 +4,7 @@ class DynamicProgramming
 
   def initialize
     @blair_cache = { 1 => 1, 2 => 2 }
+    @frog_cache = { 1 => [[1]], 2 => [[1, 1], [2]], 3 => [[1, 1, 1], [1, 2], [2, 1], [3]] }
   end
 
   def blair_nums(n)
@@ -26,7 +27,6 @@ class DynamicProgramming
     return cache if n < 4
     tmp = []
     (4..n).each do |i|
-      # p i
       cache[i - 1].each do |comb|
         comb = comb.dup
         tmp << comb.concat([1])
@@ -46,10 +46,26 @@ class DynamicProgramming
   end
 
   def frog_hops_top_down(n)
+    frog_hops_top_down_helper(n)
 
   end
 
   def frog_hops_top_down_helper(n)
+    return @frog_cache[n] unless @frog_cache[n].nil?
+    tmp = []
+    frog_hops_top_down(n-1).each do |comb|
+      comb = comb.dup
+      tmp << comb.concat([1])
+    end
+    frog_hops_top_down(n-2).each do |comb|
+      comb = comb.dup
+      tmp << comb.concat([2])
+    end
+    frog_hops_top_down(n-3).each do |comb|
+      comb = comb.dup
+      tmp << comb.concat([3])
+    end
+    @frog_cache[n] = tmp
 
   end
 
