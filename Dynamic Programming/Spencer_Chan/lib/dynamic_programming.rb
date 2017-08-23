@@ -70,7 +70,27 @@ class DynamicProgramming
   end
 
   def super_frog_hops(n, k)
+    super_cache = Hash.new([])
+    # super_cache[1].push([1])
+    super_cache = { 1 => [[1]] }
+    tmp = []
+    (2..n).each do |i|
+      super_cache[i - 1].each do |comb|
+        comb2 = comb.dup
+        comb3 = comb.dup
+        tmp << comb2.concat([1])
+        comb3[-1] += 1
+        tmp << comb3 unless comb3[-1] > k
+        if super_cache[i]
+          super_cache[i].concat(tmp)
+        else
+          super_cache[i] = tmp
+        end
+        tmp = []
+      end
+    end
 
+    super_cache[n]
   end
 
   def knapsack(weights, values, capacity)
