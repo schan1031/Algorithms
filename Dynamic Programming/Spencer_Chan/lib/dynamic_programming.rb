@@ -70,8 +70,6 @@ class DynamicProgramming
   end
 
   def super_frog_hops(n, k)
-    super_cache = Hash.new([])
-    # super_cache[1].push([1])
     super_cache = { 1 => [[1]] }
     tmp = []
     (2..n).each do |i|
@@ -94,6 +92,11 @@ class DynamicProgramming
   end
 
   def knapsack(weights, values, capacity)
+    if capacity < weights.min
+      return 0
+    elsif capacity == weights.min
+      return values[weights.find_index(weights.min)]
+    end
 
   end
 
